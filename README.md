@@ -2,6 +2,7 @@ openmediavault-cputemp
 ======================
 
 Zum konfigurieren verwenden sie :
+
 ...
 nano /usr/bin/cpu-temp
 ...
