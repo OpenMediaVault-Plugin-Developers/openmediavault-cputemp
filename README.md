@@ -2,7 +2,9 @@ openmediavault-cputemp
 ======================
 
 Zum konfigurieren verwenden sie :
+...
 nano /usr/bin/cpu-temp
+...
 Durch die eingabe vo:
 sensors
 Erhalten sie zum beispie:l
