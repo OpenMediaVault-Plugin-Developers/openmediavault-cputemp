@@ -12,6 +12,7 @@ sensors
 Erhalten sie zum beispiel:
 coretemp-isa-0000
 Rauten sie diese aus, Vorsicht es darf nur eine Zeile ausgrautet sein.
+Und den server neustarten.
 
 To configure use:
 ```
@@ -24,4 +25,5 @@ sensors
 For example, you will receive:
 coretemp-isa-0000
 Diamond them out, be careful, only one line may be greyed out.
+And restart the server.
 
