@@ -1,7 +1,9 @@
 #!/bin/sh
 #Config für die anzeige Temperatur, Dashboard CPU Temp
 #Bigwolf2000
+#Raspberrypi Temp
 cat /sys/devices/virtual/thermal/thermal_zone0/temp"
+#vcgencmd measure_temp
 #Intel coretemp-isa-0000
 #sensors coretemp-isa-0000 | grep '0:' | head -n4 | cut -c 16-23
 #intel (not) coretemp-isa-0000
