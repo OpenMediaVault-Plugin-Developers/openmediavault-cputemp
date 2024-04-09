@@ -1,0 +1,25 @@
+version: "1.0"
+type: dashboard-widget
+data:
+  id: c534b0f6-f65e-11ee-970b-f77cac9720a3
+  permissions:
+    role:
+      - admin
+  title: _("CPU Temp 3")
+  type: chart
+  chart:
+    type: gauge
+    maxHeight: "150px"
+    min: 0
+    max: 100
+    displayValue: true
+    request:
+      service: CpuTemp
+      method: get3
+    label:
+      formatter: template
+      formatterConfig: "{{ value | tofixed(1) }} C"
+    dataConfig:
+      - label: _("Temp")
+        prop: cputemp
+        backgroundColor: "#4cd964"

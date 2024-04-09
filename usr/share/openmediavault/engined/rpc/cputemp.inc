@@ -25,6 +25,9 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function initialize()
     {
         $this->registerMethod("get");
+        $this->registerMethod("get2");
+        $this->registerMethod("get3");
+        $this->registerMethod("get4");
         $this->registerMethod("getSensors");
     }
 
@@ -36,6 +39,60 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
         $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND",
           "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
         $cpuDivisor = \OMV\Environment::get("OMV_CPU_TEMP_DIVISOR", "1000");
+        if ($cpuDivisor == 0) {
+            $cpuDivisor = 1;
+        }
+        $cmd = new \OMV\System\Process($cpuTemp);
+        $cmd->execute($output, $exitStatus);
+        return [
+            "cputemp" => intval($output[0]) / $cpuDivisor
+        ];
+    }
+
+    public function get2($params, $context)
+    {
+        // Validate the RPC caller context.
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        // get cpu temp command and divisor number
+        $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND2",
+          "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
+        $cpuDivisor = \OMV\Environment::get("OMV_CPU_TEMP_DIVISOR2", "1000");
+        if ($cpuDivisor == 0) {
+            $cpuDivisor = 1;
+        }
+        $cmd = new \OMV\System\Process($cpuTemp);
+        $cmd->execute($output, $exitStatus);
+        return [
+            "cputemp" => intval($output[0]) / $cpuDivisor
+        ];
+    }
+
+    public function get3($params, $context)
+    {
+        // Validate the RPC caller context.
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        // get cpu temp command and divisor number
+        $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND3",
+          "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
+        $cpuDivisor = \OMV\Environment::get("OMV_CPU_TEMP_DIVISOR3", "1000");
+        if ($cpuDivisor == 0) {
+            $cpuDivisor = 1;
+        }
+        $cmd = new \OMV\System\Process($cpuTemp);
+        $cmd->execute($output, $exitStatus);
+        return [
+            "cputemp" => intval($output[0]) / $cpuDivisor
+        ];
+    }
+
+    public function get4($params, $context)
+    {
+        // Validate the RPC caller context.
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        // get cpu temp command and divisor number
+        $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND4",
+          "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
+        $cpuDivisor = \OMV\Environment::get("OMV_CPU_TEMP_DIVISOR4", "1000");
         if ($cpuDivisor == 0) {
             $cpuDivisor = 1;
         }
