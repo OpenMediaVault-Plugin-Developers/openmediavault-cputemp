@@ -1,3 +1,9 @@
+openmediavault-cputemp (7.0.1) stable; urgency=low
+
+  * Add three more customizable widgets
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Tue, 09 Apr 2024 05:55:31 -0500
+
 openmediavault-cputemp (7.0) stable; urgency=low
 
   * Update for OMV 7.x
