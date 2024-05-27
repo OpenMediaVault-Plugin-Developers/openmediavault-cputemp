@@ -5,6 +5,7 @@ data:
   permissions:
     role:
       - admin
+      - user
   title: _("CPU Temp 3")
   type: chart
   chart:

@@ -34,7 +34,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function get($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_EVERYONE]);
         // get cpu temp command and divisor number
         $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND",
           "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
@@ -52,7 +52,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function get2($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_EVERYONE]);
         // get cpu temp command and divisor number
         $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND2",
           "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
@@ -70,7 +70,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function get3($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_EVERYONE]);
         // get cpu temp command and divisor number
         $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND3",
           "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
@@ -88,7 +88,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function get4($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_EVERYONE]);
         // get cpu temp command and divisor number
         $cpuTemp = \OMV\Environment::get("OMV_CPU_TEMP_COMMAND4",
           "cat /sys/devices/virtual/thermal/thermal_zone0/temp");
@@ -106,7 +106,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     public function getSensors($params, $context)
     {
         // Validate the RPC caller context.
-        $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
+        $this->validateMethodContext($context, ["role" => OMV_ROLE_EVERYONE]);
         $output = [];
         $temps = [];
         if (file_exists("/usr/bin/sensors")) {

@@ -5,6 +5,7 @@ data:
   permissions:
     role:
       - admin
+      - user
   title: _("Sensors")
   type: text
   text:
