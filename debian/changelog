@@ -1,3 +1,9 @@
+openmediavault-cputemp (7.0.2) stable; urgency=low
+
+  * Allow user use of temp and sensor widgets
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Mon, 27 May 2024 08:23:35 -0500
+
 openmediavault-cputemp (7.0.1) stable; urgency=low
 
   * Add three more customizable widgets
