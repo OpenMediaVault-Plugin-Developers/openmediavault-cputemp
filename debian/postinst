@@ -13,7 +13,7 @@ case "$1" in
 
         # generate graphs
         echo "Generating graphs ..."
-        omv-mkrrdgraph
+        omv-mkrrdgraph || :
 
         # Activate package triggers.
         dpkg-trigger update-workbench

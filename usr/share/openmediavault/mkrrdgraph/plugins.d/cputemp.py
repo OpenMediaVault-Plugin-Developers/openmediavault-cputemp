@@ -21,11 +21,12 @@ import openmediavault.mkrrdgraph
 
 class Plugin(openmediavault.mkrrdgraph.IPlugin):
     def create_graph(self, config):
-        config.update(
-            {
-                'color_cputemp': '#ff1300',  # red
-            }
-        )
+        colors = {
+            '':  '#ff1300',  # red
+            '2': '#0bb6ff',  # blue
+            '3': '#00df00',  # green
+            '4': '#fdaf00',  # orange
+        }
         for suffix in ['', '2', '3', '4']:
             instance = 'exec-cputemp{}'.format(suffix)
             title = 'CPU Temperature{}'.format(
@@ -33,6 +34,7 @@ class Plugin(openmediavault.mkrrdgraph.IPlugin):
             )
             config['instance'] = instance
             config['title_cputemp'] = title
+            config['color_cputemp'] = colors[suffix]
 
             image_filename = '{image_dir}/{instance}-{period}.png'.format(**config)
             rrd_file = '{data_dir}/{instance}/temperature-value.rrd'.format(**config)
@@ -55,7 +57,7 @@ class Plugin(openmediavault.mkrrdgraph.IPlugin):
             args.append('DEF:tavg={data_dir}/{instance}/temperature-value.rrd:value:AVERAGE'.format(**config))
             args.append('DEF:tmin={data_dir}/{instance}/temperature-value.rrd:value:MIN'.format(**config))
             args.append('DEF:tmax={data_dir}/{instance}/temperature-value.rrd:value:MAX'.format(**config))
-            args.append('AREA:tavg{color_cputemp}:"Temperature"'.format(**config))
+            args.append('LINE1:tavg{color_cputemp}:"Temperature"'.format(**config))
             args.append('GPRINT:tmin:MIN:"%4.1lf C Min"')
             args.append('GPRINT:tavg:AVERAGE:"%4.1lf C Avg"')
             args.append('GPRINT:tmax:MAX:"%4.1lf C Max"')
