@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Collectd exec plugin script for CPU temperature monitoring.
-# Reads CPU temperature and outputs data in collectd PUTVAL format.
+# Reads up to 4 CPU temperatures and outputs data in collectd PUTVAL format.
 
 HOSTNAME="${COLLECTD_HOSTNAME:-localhost}"
 INTERVAL="${COLLECTD_INTERVAL:-60}"
@@ -26,21 +26,25 @@ if [ -r /etc/default/openmediavault ]; then
     . /etc/default/openmediavault
 fi
 
-CPU_TEMP_COMMAND="${OMV_CPU_TEMP_COMMAND:-cat /sys/devices/virtual/thermal/thermal_zone0/temp}"
-CPU_TEMP_DIVISOR="${OMV_CPU_TEMP_DIVISOR:-1000}"
+emit_temp() {
+    SUFFIX="$1"
+    eval "CMD=\${OMV_CPU_TEMP_COMMAND${SUFFIX}:-cat /sys/devices/virtual/thermal/thermal_zone0/temp}"
+    eval "DIV=\${OMV_CPU_TEMP_DIVISOR${SUFFIX}:-1000}"
+    [ "$DIV" = "0" ] && DIV=1
 
-# Ensure divisor is not zero.
-if [ "$CPU_TEMP_DIVISOR" = "0" ]; then
-    CPU_TEMP_DIVISOR=1
-fi
-
-while true; do
-    TEMP_RAW=$(sh -c "$CPU_TEMP_COMMAND" 2>/dev/null | head -1 | tr -d '[:space:]')
+    TEMP_RAW=$(sh -c "$CMD" 2>/dev/null | head -1 | tr -d '[:space:]')
     if [ -n "$TEMP_RAW" ]; then
-        VALUE=$(awk "BEGIN {printf \"%.3f\", $TEMP_RAW / $CPU_TEMP_DIVISOR}" 2>/dev/null)
+        VALUE=$(awk "BEGIN {printf \"%.3f\", $TEMP_RAW / $DIV}" 2>/dev/null)
         if [ -n "$VALUE" ]; then
-            echo "PUTVAL \"$HOSTNAME/exec-cputemp/temperature-value\" interval=$INTERVAL N:$VALUE"
+            echo "PUTVAL \"$HOSTNAME/exec-cputemp${SUFFIX}/temperature-value\" interval=$INTERVAL N:$VALUE"
         fi
     fi
+}
+
+while true; do
+    emit_temp ""
+    emit_temp "2"
+    emit_temp "3"
+    emit_temp "4"
     sleep "$INTERVAL"
 done

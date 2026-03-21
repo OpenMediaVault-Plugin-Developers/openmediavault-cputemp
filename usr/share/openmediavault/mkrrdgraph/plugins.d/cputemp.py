@@ -23,36 +23,45 @@ class Plugin(openmediavault.mkrrdgraph.IPlugin):
     def create_graph(self, config):
         config.update(
             {
-                'title_cputemp': 'CPU Temperature',
                 'color_cputemp': '#ff1300',  # red
             }
         )
-        image_filename = '{image_dir}/exec-cputemp-{period}.png'.format(**config)
-        rrd_file = '{data_dir}/exec-cputemp/temperature-value.rrd'.format(**config)
-        if not os.path.exists(rrd_file):
-            openmediavault.mkrrdgraph.copy_placeholder_image(image_filename)
-            return 0
-        args = []
-        # yapf: disable
-        # pylint: disable=line-too-long
-        # autopep8: off
-        args.append(image_filename)
-        args.extend(config['defaults'])
-        args.extend(['--start', config['start']])
-        args.extend(['--title', '"{title_cputemp}{title_by_period}"'.format(**config)])
-        args.append('--slope-mode')
-        args.extend(['--lower-limit', '0'])
-        args.extend(['--vertical-label', 'Celsius'])
-        args.append('DEF:tavg={data_dir}/exec-cputemp/temperature-value.rrd:value:AVERAGE'.format(**config))
-        args.append('DEF:tmin={data_dir}/exec-cputemp/temperature-value.rrd:value:MIN'.format(**config))
-        args.append('DEF:tmax={data_dir}/exec-cputemp/temperature-value.rrd:value:MAX'.format(**config))
-        args.append('AREA:tavg{color_cputemp}:"Temperature"'.format(**config))
-        args.append('GPRINT:tmin:MIN:"%4.1lf C Min"')
-        args.append('GPRINT:tavg:AVERAGE:"%4.1lf C Avg"')
-        args.append('GPRINT:tmax:MAX:"%4.1lf C Max"')
-        args.append('GPRINT:tavg:LAST:"%4.1lf C Last\\l"')
-        args.append('COMMENT:"{last_update}"'.format(**config))
-        # autopep8: on
-        # yapf: enable
-        openmediavault.mkrrdgraph.call_rrdtool_graph(args)
+        for suffix in ['', '2', '3', '4']:
+            instance = 'exec-cputemp{}'.format(suffix)
+            title = 'CPU Temperature{}'.format(
+                ' {}'.format(suffix) if suffix else ''
+            )
+            config['instance'] = instance
+            config['title_cputemp'] = title
+
+            image_filename = '{image_dir}/{instance}-{period}.png'.format(**config)
+            rrd_file = '{data_dir}/{instance}/temperature-value.rrd'.format(**config)
+
+            if not os.path.exists(rrd_file):
+                openmediavault.mkrrdgraph.copy_placeholder_image(image_filename)
+                continue
+
+            args = []
+            # yapf: disable
+            # pylint: disable=line-too-long
+            # autopep8: off
+            args.append(image_filename)
+            args.extend(config['defaults'])
+            args.extend(['--start', config['start']])
+            args.extend(['--title', '"{title_cputemp}{title_by_period}"'.format(**config)])
+            args.append('--slope-mode')
+            args.extend(['--lower-limit', '0'])
+            args.extend(['--vertical-label', 'Celsius'])
+            args.append('DEF:tavg={data_dir}/{instance}/temperature-value.rrd:value:AVERAGE'.format(**config))
+            args.append('DEF:tmin={data_dir}/{instance}/temperature-value.rrd:value:MIN'.format(**config))
+            args.append('DEF:tmax={data_dir}/{instance}/temperature-value.rrd:value:MAX'.format(**config))
+            args.append('AREA:tavg{color_cputemp}:"Temperature"'.format(**config))
+            args.append('GPRINT:tmin:MIN:"%4.1lf C Min"')
+            args.append('GPRINT:tavg:AVERAGE:"%4.1lf C Avg"')
+            args.append('GPRINT:tmax:MAX:"%4.1lf C Max"')
+            args.append('GPRINT:tavg:LAST:"%4.1lf C Last\\l"')
+            args.append('COMMENT:"{last_update}"'.format(**config))
+            # autopep8: on
+            # yapf: enable
+            openmediavault.mkrrdgraph.call_rrdtool_graph(args)
         return 0

@@ -6,3 +6,10 @@ data:
   config:
     graphs:
       - name: "exec-cputemp"
+        label: _("CPU Temp 1")
+      - name: "exec-cputemp2"
+        label: _("CPU Temp 2")
+      - name: "exec-cputemp3"
+        label: _("CPU Temp 3")
+      - name: "exec-cputemp4"
+        label: _("CPU Temp 4")
