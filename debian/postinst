@@ -7,7 +7,11 @@ set -e
 
 case "$1" in
     configure)
-        # Activate package triggers
+        # Deploy collectd configuration on fresh install.
+        if [ -z "$2" ]; then
+            omv-salt deploy run --no-color --quiet rrdcached collectd || :
+        fi
+        # Activate package triggers.
         dpkg-trigger update-workbench
     ;;
 

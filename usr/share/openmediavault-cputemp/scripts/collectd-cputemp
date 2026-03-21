@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Copyright (C) 2022-2026 openmediavault plugin developers
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Collectd exec plugin script for CPU temperature monitoring.
+# Reads CPU temperature and outputs data in collectd PUTVAL format.
+
+HOSTNAME="${COLLECTD_HOSTNAME:-localhost}"
+INTERVAL="${COLLECTD_INTERVAL:-60}"
+
+# Source OMV defaults for CPU temp command/divisor settings.
+if [ -r /etc/default/openmediavault ]; then
+    . /etc/default/openmediavault
+fi
+
+CPU_TEMP_COMMAND="${OMV_CPU_TEMP_COMMAND:-cat /sys/devices/virtual/thermal/thermal_zone0/temp}"
+CPU_TEMP_DIVISOR="${OMV_CPU_TEMP_DIVISOR:-1000}"
+
+# Ensure divisor is not zero.
+if [ "$CPU_TEMP_DIVISOR" = "0" ]; then
+    CPU_TEMP_DIVISOR=1
+fi
+
+while true; do
+    TEMP_RAW=$(sh -c "$CPU_TEMP_COMMAND" 2>/dev/null | head -1 | tr -d '[:space:]')
+    if [ -n "$TEMP_RAW" ]; then
+        VALUE=$(awk "BEGIN {printf \"%.3f\", $TEMP_RAW / $CPU_TEMP_DIVISOR}" 2>/dev/null)
+        if [ -n "$VALUE" ]; then
+            echo "PUTVAL \"$HOSTNAME/exec-cputemp/temperature-value\" interval=$INTERVAL N:$VALUE"
+        fi
+    fi
+    sleep "$INTERVAL"
+done

@@ -1,0 +1,8 @@
+version: "1.0"
+type: "component"
+data:
+  name: "omv-diagnostics-performance-statistics-cputemp-rrd-page"
+  type: "rrdPage"
+  config:
+    graphs:
+      - name: "exec-cputemp"

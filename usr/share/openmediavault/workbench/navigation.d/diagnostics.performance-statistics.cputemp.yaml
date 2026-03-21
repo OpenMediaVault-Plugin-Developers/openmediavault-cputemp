@@ -1,0 +1,7 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: "diagnostics.performance-statistics.cputemp"
+  text: _("CPU Temp")
+  icon: "mdi:thermometer"
+  url: "/diagnostics/performance-statistics/cputemp"

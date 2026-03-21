@@ -1,3 +1,9 @@
+openmediavault-cputemp (8.1) UNRELEASED; urgency=medium
+
+  * Add cpu temp graph
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sat, 21 Mar 2026 13:26:35 +0000
+
 openmediavault-cputemp (8.0) stable; urgency=low
 
   * Update for omv 8.x
