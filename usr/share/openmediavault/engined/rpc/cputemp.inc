@@ -71,7 +71,7 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
         try {
             return number_format($this->callScript($scriptPath, $divisor), 1) . " °C";
         } catch (\Exception $e) {
-            return "Error: " . $e->getMessage();
+            return "-";
         }
     }
 
