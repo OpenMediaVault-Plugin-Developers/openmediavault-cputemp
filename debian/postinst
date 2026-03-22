@@ -7,6 +7,10 @@ set -e
 
 case "$1" in
     configure)
+        # Initialize configuration database first so salt can read settings.
+        echo "Updating configuration database ..."
+        omv-confdbadm create "conf.service.cputemp"
+
         # Deploy collectd and rrdcached configurations on fresh install.
         echo "Deploy collectd and rrdcached configurations ..."
         omv-salt deploy run --no-color --quiet rrdcached collectd || :

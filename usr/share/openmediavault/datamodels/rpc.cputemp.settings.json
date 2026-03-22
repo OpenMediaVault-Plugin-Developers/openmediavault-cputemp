@@ -1,0 +1,61 @@
+[{
+	"type": "rpc",
+	"id": "rpc.cputemp.setSettings",
+	"params": {
+		"type": "object",
+		"properties": {
+			"script": {
+				"type": "string",
+				"required": true
+			},
+			"scriptpath": {
+				"type": "string",
+				"required": true
+			},
+			"divisor": {
+				"type": "integer",
+				"minimum": 1,
+				"required": true
+			},
+			"script2": {
+				"type": "string",
+				"required": true
+			},
+			"scriptpath2": {
+				"type": "string",
+				"required": true
+			},
+			"divisor2": {
+				"type": "integer",
+				"minimum": 1,
+				"required": true
+			},
+			"script3": {
+				"type": "string",
+				"required": true
+			},
+			"scriptpath3": {
+				"type": "string",
+				"required": true
+			},
+			"divisor3": {
+				"type": "integer",
+				"minimum": 1,
+				"required": true
+			},
+			"script4": {
+				"type": "string",
+				"required": true
+			},
+			"scriptpath4": {
+				"type": "string",
+				"required": true
+			},
+			"divisor4": {
+				"type": "integer",
+				"minimum": 1,
+				"required": true
+			}
+		}
+	}
+}]

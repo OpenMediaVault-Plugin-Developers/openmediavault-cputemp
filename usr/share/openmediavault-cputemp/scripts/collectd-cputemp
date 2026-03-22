@@ -21,30 +21,41 @@
 HOSTNAME="${COLLECTD_HOSTNAME:-localhost}"
 INTERVAL="${COLLECTD_INTERVAL:-60}"
 
-# Source OMV defaults for CPU temp command/divisor settings.
-if [ -r /etc/default/openmediavault ]; then
-    . /etc/default/openmediavault
+# Source generated configuration (written by salt).
+if [ -r /etc/openmediavault/cputemp.conf ]; then
+    . /etc/openmediavault/cputemp.conf
 fi
 
+SCRIPT1="${SCRIPT1:-/usr/sbin/cpu-temp}"
+DIVISOR1="${DIVISOR1:-1000}"
+SCRIPT2="${SCRIPT2:-/usr/sbin/cpu-temp2}"
+DIVISOR2="${DIVISOR2:-1000}"
+SCRIPT3="${SCRIPT3:-/usr/sbin/cpu-temp3}"
+DIVISOR3="${DIVISOR3:-1000}"
+SCRIPT4="${SCRIPT4:-/usr/sbin/cpu-temp4}"
+DIVISOR4="${DIVISOR4:-1000}"
+
 emit_temp() {
-    SUFFIX="$1"
-    eval "CMD=\${OMV_CPU_TEMP_COMMAND${SUFFIX}:-cat /sys/devices/virtual/thermal/thermal_zone0/temp}"
-    eval "DIV=\${OMV_CPU_TEMP_DIVISOR${SUFFIX}:-1000}"
+    LABEL="$1"
+    SCRIPT="$2"
+    DIV="$3"
+
+    [ -x "$SCRIPT" ] || return
     [ "$DIV" = "0" ] && DIV=1
 
-    TEMP_RAW=$(sh -c "$CMD" 2>/dev/null | head -1 | tr -d '[:space:]')
+    TEMP_RAW=$("$SCRIPT" 2>/dev/null | head -1 | tr -d '[:space:]')
     if [ -n "$TEMP_RAW" ]; then
         VALUE=$(awk "BEGIN {printf \"%.3f\", $TEMP_RAW / $DIV}" 2>/dev/null)
         if [ -n "$VALUE" ]; then
-            echo "PUTVAL \"$HOSTNAME/exec-cputemp${SUFFIX}/temperature-value\" interval=$INTERVAL N:$VALUE"
+            echo "PUTVAL \"$HOSTNAME/exec-cputemp${LABEL}/temperature-value\" interval=$INTERVAL N:$VALUE"
         fi
     fi
 }
 
 while true; do
-    emit_temp ""
-    emit_temp "2"
-    emit_temp "3"
-    emit_temp "4"
+    emit_temp ""  "$SCRIPT1" "$DIVISOR1"
+    emit_temp "2" "$SCRIPT2" "$DIVISOR2"
+    emit_temp "3" "$SCRIPT3" "$DIVISOR3"
+    emit_temp "4" "$SCRIPT4" "$DIVISOR4"
     sleep "$INTERVAL"
 done

@@ -12,6 +12,15 @@ remove_action() {
 case "$1" in
     purge)
         remove_action
+        # Remove generated configuration and scripts.
+        rm -f /etc/openmediavault/cputemp.conf
+        rm -f /usr/sbin/cpu-temp \
+              /usr/sbin/cpu-temp2 \
+              /usr/sbin/cpu-temp3 \
+              /usr/sbin/cpu-temp4
+        if omv_config_exists "/config/services/cputemp"; then
+            omv_config_delete "/config/services/cputemp"
+        fi
     ;;
 
     remove)

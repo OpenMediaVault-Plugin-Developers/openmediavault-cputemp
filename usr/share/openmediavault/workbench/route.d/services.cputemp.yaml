@@ -1,0 +1,7 @@
+version: "1.0"
+type: route
+data:
+  url: "/services/cputemp"
+  title: _("CPU Temp")
+  editing: true
+  component: omv-services-cputemp-settings-form-page

@@ -1,0 +1,7 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: "services.cputemp"
+  text: _("CPU Temp")
+  icon: "mdi:thermometer"
+  url: "/services/cputemp"

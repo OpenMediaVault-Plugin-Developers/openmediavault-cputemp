@@ -1,0 +1,107 @@
+version: "1.0"
+type: component
+data:
+  name: omv-services-cputemp-settings-form-page
+  type: formPage
+  config:
+    request:
+      service: CpuTemp
+      get:
+        method: getSettings
+      post:
+        method: setSettings
+    fields:
+      - type: divider
+        title: _("Sensor 1")
+      - type: textInput
+        name: scriptpath
+        label: _("Script path")
+        hint: _("Path where the temperature script will be written.")
+        value: "/usr/sbin/cpu-temp"
+        validators:
+          required: true
+      - type: codeEditor
+        name: script
+        label: _("Script")
+        hint: _("Script content. Must output a raw numeric value; divide by the divisor below to get degrees Celsius.")
+        value: ""
+        language: 'shell'
+        validators:
+          required: true
+      - type: numberInput
+        name: divisor
+        label: _("Divisor")
+        hint: _("Divide the raw script output by this value to get degrees Celsius. Use 1000 for millidegrees (e.g. thermal_zone), 1 if the script already outputs Celsius.")
+        value: 1000
+        validators:
+          required: true
+          min: 1
+      - type: divider
+        title: _("Sensor 2")
+      - type: textInput
+        name: scriptpath2
+        label: _("Script path")
+        value: "/usr/sbin/cpu-temp2"
+        validators:
+          required: true
+      - type: codeEditor
+        name: script2
+        label: _("Script")
+        hint: _("Leave empty to disable this sensor.")
+        value: ""
+        language: 'shell'
+      - type: numberInput
+        name: divisor2
+        label: _("Divisor")
+        value: 1000
+        validators:
+          required: true
+          min: 1
+      - type: divider
+        title: _("Sensor 3")
+      - type: textInput
+        name: scriptpath3
+        label: _("Script path")
+        value: "/usr/sbin/cpu-temp3"
+        validators:
+          required: true
+      - type: codeEditor
+        name: script3
+        label: _("Script")
+        hint: _("Leave empty to disable this sensor.")
+        value: ""
+        language: 'shell'
+      - type: numberInput
+        name: divisor3
+        label: _("Divisor")
+        value: 1000
+        validators:
+          required: true
+          min: 1
+      - type: divider
+        title: _("Sensor 4")
+      - type: textInput
+        name: scriptpath4
+        label: _("Script path")
+        value: "/usr/sbin/cpu-temp4"
+        validators:
+          required: true
+      - type: codeEditor
+        name: script4
+        label: _("Script")
+        hint: _("Leave empty to disable this sensor.")
+        value: ""
+        language: 'shell'
+      - type: numberInput
+        name: divisor4
+        label: _("Divisor")
+        value: 1000
+        validators:
+          required: true
+          min: 1
+    buttons:
+      - template: submit
+      - template: cancel
+        execute:
+          type: url
+          url: "/services"

@@ -1,0 +1,63 @@
+{
+	"type": "config",
+	"id": "conf.service.cputemp",
+	"title": "CPU Temp",
+	"queryinfo": {
+		"xpath": ".//services/cputemp",
+		"iterable": false
+	},
+	"properties": {
+		"script": {
+			"type": "string",
+			"default": "#!/bin/sh\ncat /sys/devices/virtual/thermal/thermal_zone0/temp"
+		},
+		"scriptpath": {
+			"type": "string",
+			"default": "/usr/sbin/cpu-temp"
+		},
+		"divisor": {
+			"type": "integer",
+			"minimum": 1,
+			"default": 1000
+		},
+		"script2": {
+			"type": "string",
+			"default": ""
+		},
+		"scriptpath2": {
+			"type": "string",
+			"default": "/usr/sbin/cpu-temp2"
+		},
+		"divisor2": {
+			"type": "integer",
+			"minimum": 1,
+			"default": 1000
+		},
+		"script3": {
+			"type": "string",
+			"default": ""
+		},
+		"scriptpath3": {
+			"type": "string",
+			"default": "/usr/sbin/cpu-temp3"
+		},
+		"divisor3": {
+			"type": "integer",
+			"minimum": 1,
+			"default": 1000
+		},
+		"script4": {
+			"type": "string",
+			"default": ""
+		},
+		"scriptpath4": {
+			"type": "string",
+			"default": "/usr/sbin/cpu-temp4"
+		},
+		"divisor4": {
+			"type": "integer",
+			"minimum": 1,
+			"default": 1000
+		}
+	}
+}
