@@ -36,6 +36,11 @@ data:
         validators:
           required: true
           min: 1
+      - type: textInput
+        name: currenttemp1
+        label: _("Current reading")
+        submitValue: false
+        readonly: true
       - type: divider
         title: _("Sensor 2")
       - type: textInput
@@ -57,6 +62,11 @@ data:
         validators:
           required: true
           min: 1
+      - type: textInput
+        name: currenttemp2
+        label: _("Current reading")
+        submitValue: false
+        readonly: true
       - type: divider
         title: _("Sensor 3")
       - type: textInput
@@ -78,6 +88,11 @@ data:
         validators:
           required: true
           min: 1
+      - type: textInput
+        name: currenttemp3
+        label: _("Current reading")
+        submitValue: false
+        readonly: true
       - type: divider
         title: _("Sensor 4")
       - type: textInput
@@ -99,6 +114,11 @@ data:
         validators:
           required: true
           min: 1
+      - type: textInput
+        name: currenttemp4
+        label: _("Current reading")
+        submitValue: false
+        readonly: true
     buttons:
       - template: submit
       - template: cancel

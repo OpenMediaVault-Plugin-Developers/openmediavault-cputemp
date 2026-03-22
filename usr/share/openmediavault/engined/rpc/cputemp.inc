@@ -37,7 +37,12 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
     {
         $this->validateMethodContext($context, ["role" => OMV_ROLE_ADMINISTRATOR]);
         $db = \OMV\Config\Database::getInstance();
-        return $db->getAssoc("conf.service.cputemp");
+        $result = $db->getAssoc("conf.service.cputemp");
+        $result['currenttemp1'] = $this->callScriptSafe($result['scriptpath'], $result['divisor']);
+        $result['currenttemp2'] = empty($result['script2']) ? "" : $this->callScriptSafe($result['scriptpath2'], $result['divisor2']);
+        $result['currenttemp3'] = empty($result['script3']) ? "" : $this->callScriptSafe($result['scriptpath3'], $result['divisor3']);
+        $result['currenttemp4'] = empty($result['script4']) ? "" : $this->callScriptSafe($result['scriptpath4'], $result['divisor4']);
+        return $result;
     }
 
     public function setSettings($params, $context)
@@ -59,6 +64,15 @@ class OMVRpcServiceCpuTemp extends \OMV\Rpc\ServiceAbstract
         $cmd = new \OMV\System\Process($scriptPath);
         $cmd->execute($output, $exitStatus);
         return intval($output[0]) / $divisor;
+    }
+
+    private function callScriptSafe($scriptPath, $divisor)
+    {
+        try {
+            return number_format($this->callScript($scriptPath, $divisor), 1) . " °C";
+        } catch (\Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
     }
 
     public function get($params, $context)
