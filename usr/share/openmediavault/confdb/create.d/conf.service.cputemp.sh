@@ -31,6 +31,11 @@ make_script() {
     fi
 }
 
+# Escape XML special characters so the value is safe for omv_config_add_key.
+xml_escape() {
+    printf '%s' "${1}" | xmlstarlet esc
+}
+
 if ! omv_config_exists "/config/services/cputemp"; then
     # Defaults
     OMV_CPU_TEMP_COMMAND=""
@@ -78,16 +83,16 @@ if ! omv_config_exists "/config/services/cputemp"; then
     fi
 
     omv_config_add_node "/config/services" "cputemp"
-    omv_config_add_key "/config/services/cputemp" "script" "${SCRIPT1}"
+    omv_config_add_key "/config/services/cputemp" "script" "$(xml_escape "${SCRIPT1}")"
     omv_config_add_key "/config/services/cputemp" "scriptpath" "/usr/sbin/cpu-temp"
     omv_config_add_key "/config/services/cputemp" "divisor" "${OMV_CPU_TEMP_DIVISOR}"
-    omv_config_add_key "/config/services/cputemp" "script2" "${SCRIPT2}"
+    omv_config_add_key "/config/services/cputemp" "script2" "$(xml_escape "${SCRIPT2}")"
     omv_config_add_key "/config/services/cputemp" "scriptpath2" "/usr/sbin/cpu-temp2"
     omv_config_add_key "/config/services/cputemp" "divisor2" "${OMV_CPU_TEMP_DIVISOR2}"
-    omv_config_add_key "/config/services/cputemp" "script3" "${SCRIPT3}"
+    omv_config_add_key "/config/services/cputemp" "script3" "$(xml_escape "${SCRIPT3}")"
     omv_config_add_key "/config/services/cputemp" "scriptpath3" "/usr/sbin/cpu-temp3"
     omv_config_add_key "/config/services/cputemp" "divisor3" "${OMV_CPU_TEMP_DIVISOR3}"
-    omv_config_add_key "/config/services/cputemp" "script4" "${SCRIPT4}"
+    omv_config_add_key "/config/services/cputemp" "script4" "$(xml_escape "${SCRIPT4}")"
     omv_config_add_key "/config/services/cputemp" "scriptpath4" "/usr/sbin/cpu-temp4"
     omv_config_add_key "/config/services/cputemp" "divisor4" "${OMV_CPU_TEMP_DIVISOR4}"
 fi
