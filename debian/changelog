@@ -1,8 +1,8 @@
-openmediavault-cputemp (8.2) UNRELEASED; urgency=medium
+openmediavault-cputemp (8.2) stable; urgency=low
 
   * Allow managing custom temp scripts from the web interface
 
- -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sun, 22 Mar 2026 16:04:59 +0000
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sun, 22 Mar 2026 16:23:25 +0000
 
 openmediavault-cputemp (8.1) stable; urgency=low
 

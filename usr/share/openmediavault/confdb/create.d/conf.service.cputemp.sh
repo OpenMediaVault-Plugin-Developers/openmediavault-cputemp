@@ -51,23 +51,27 @@ if ! omv_config_exists "/config/services/cputemp"; then
     if [ -z "${OMV_CPU_TEMP_COMMAND}" ]; then
         SCRIPT1="$(printf '#!/bin/sh\ncat /sys/devices/virtual/thermal/thermal_zone0/temp\n')"
     else
+        echo "Importing cpu temp 1 script ..."
         SCRIPT1="$(make_script "${OMV_CPU_TEMP_COMMAND}")"
     fi
 
     # Sensors 2-4: only populate if a command was explicitly configured
     if [ -n "${OMV_CPU_TEMP_COMMAND2}" ]; then
+        echo "Importing cpu temp 2 script ..."
         SCRIPT2="$(make_script "${OMV_CPU_TEMP_COMMAND2}")"
     else
         SCRIPT2=""
     fi
 
     if [ -n "${OMV_CPU_TEMP_COMMAND3}" ]; then
+        echo "Importing cpu temp 3 script ..."
         SCRIPT3="$(make_script "${OMV_CPU_TEMP_COMMAND3}")"
     else
         SCRIPT3=""
     fi
 
     if [ -n "${OMV_CPU_TEMP_COMMAND4}" ]; then
+        echo "Importing cpu temp 4 script ..."
         SCRIPT4="$(make_script "${OMV_CPU_TEMP_COMMAND4}")"
     else
         SCRIPT4=""
