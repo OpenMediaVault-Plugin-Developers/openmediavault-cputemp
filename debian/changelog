@@ -1,3 +1,10 @@
+openmediavault-cputemp (8.2.1) stable; urgency=low
+
+  * Improve import of previous config
+  * Add current temp readings on settings form
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Sun, 22 Mar 2026 17:35:49 +0000
+
 openmediavault-cputemp (8.2) stable; urgency=low
 
   * Allow managing custom temp scripts from the web interface
