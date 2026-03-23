@@ -1,3 +1,9 @@
+openmediavault-cputemp (8.2.2) stable; urgency=low
+
+  * Only generate new graphs if monitoring is enabled
+
+ -- OpenMediaVault Plugin Developers <plugins@omv-extras.org>  Mon, 23 Mar 2026 11:33:24 +0000
+
 openmediavault-cputemp (8.2.1) stable; urgency=low
 
   * Improve import of previous config
