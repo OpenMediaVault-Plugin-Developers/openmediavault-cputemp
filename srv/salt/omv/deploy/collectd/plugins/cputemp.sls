@@ -45,7 +45,7 @@ configure_cputemp_script1:
     - template: jinja
     - context:
         script: {{ config.script | tojson }}
-    - mode: 755
+    - mode: '0755'
 
 {% if config.script2 %}
 configure_cputemp_script2:
@@ -56,7 +56,7 @@ configure_cputemp_script2:
     - template: jinja
     - context:
         script: {{ config.script2 | tojson }}
-    - mode: 755
+    - mode: '0755'
 {% else %}
 remove_cputemp_script2:
   file.absent:
@@ -72,7 +72,7 @@ configure_cputemp_script3:
     - template: jinja
     - context:
         script: {{ config.script3 | tojson }}
-    - mode: 755
+    - mode: '0755'
 {% else %}
 remove_cputemp_script3:
   file.absent:
@@ -88,7 +88,7 @@ configure_cputemp_script4:
     - template: jinja
     - context:
         script: {{ config.script4 | tojson }}
-    - mode: 755
+    - mode: '0755'
 {% else %}
 remove_cputemp_script4:
   file.absent:
