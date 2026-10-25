@@ -9,7 +9,7 @@
 	"properties": {
 		"script": {
 			"type": "string",
-			"default": "#!/bin/sh\ncat /sys/devices/virtual/thermal/thermal_zone0/temp"
+			"default": "#!/bin/sh\nfor z in /sys/class/thermal/thermal_zone*; do\n    [ \"$(cat \"$z/type\" 2>/dev/null)\" = \"x86_pkg_temp\" ] && exec cat \"$z/temp\"\ndone\nfor h in /sys/class/hwmon/hwmon*; do\n    [ \"$(cat \"$h/name\" 2>/dev/null)\" = \"k10temp\" ] && exec cat \"$h/temp1_input\"\ndone\ncat /sys/devices/virtual/thermal/thermal_zone0/temp"
 		},
 		"scriptpath": {
 			"type": "string",
