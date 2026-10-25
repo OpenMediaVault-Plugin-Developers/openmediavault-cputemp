@@ -52,9 +52,20 @@ if ! omv_config_exists "/config/services/cputemp"; then
         . /etc/default/openmediavault
     fi
 
-    # Sensor 1: use default thermal zone if no command was configured
+    # Sensor 1: if no command was configured, prefer the Intel package sensor, then AMD k10temp,
+    # and fall back to the first thermal zone (thermal_zone0 is a board ACPI zone on many x86 boards)
     if [ -z "${OMV_CPU_TEMP_COMMAND}" ]; then
-        SCRIPT1="$(printf '#!/bin/sh\ncat /sys/devices/virtual/thermal/thermal_zone0/temp\n')"
+        SCRIPT1="$(cat <<'EOF'
+#!/bin/sh
+for z in /sys/class/thermal/thermal_zone*; do
+    [ "$(cat "$z/type" 2>/dev/null)" = "x86_pkg_temp" ] && exec cat "$z/temp"
+done
+for h in /sys/class/hwmon/hwmon*; do
+    [ "$(cat "$h/name" 2>/dev/null)" = "k10temp" ] && exec cat "$h/temp1_input"
+done
+cat /sys/devices/virtual/thermal/thermal_zone0/temp
+EOF
+)"
     else
         echo "Importing cpu temp 1 script ..."
         SCRIPT1="$(make_script "${OMV_CPU_TEMP_COMMAND}")"
